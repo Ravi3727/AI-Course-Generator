@@ -3,15 +3,14 @@
 // Add my prompt engineering design for making text content.
 // call API to generate text content based on the prompt
 // Return the generated text content
-
-const textPrompt = (courseData) => {
-    `
+const textPrompt = (coursePrompt,syllabus) => {
+   return `
     You are an expert Instructional Designer and a world-renowned subject matter expert in "". You have the authority of a PhD in the field and the clarity of a seasoned educator. Your task is to write the complete explanatory text for a single chapter of an online course.
 
 ## Context
-- Course Topic: "${courseData.courseTitle}"
-- Module Title: "${courseData.moduleTitle}"
-- Chapter Title: "${courseData.chapterTitle}"
+-Course Syllabus: ${syllabus}
+-User Prompt: ${coursePrompt}
+
 
 ## Task
 Generate a comprehensive, university-level page of explanatory text for the chapter titled "". The text should be detailed, accurate, and engaging.
@@ -32,3 +31,7 @@ The final output should be a single block of Markdown-formatted text.
 3.3. Deconstruction of the Text Prompt
 `
 }
+
+
+
+export default textPrompt;

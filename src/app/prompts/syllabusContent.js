@@ -1,11 +1,7 @@
+const syllabusGeneratePrompt = (courseData) => {
+    return `You are an expert curriculum developer and instructional designer, tasked with creating a comprehensive and logically structured syllabus for an online course.
 
-
-
-
-const prompt = (courseData) => {
-`You are an expert curriculum developer and instructional designer, tasked with creating a comprehensive and logically structured syllabus for an online course.
-
-The overall topic for the course is: ${courseData.courseTitle}
+Here is the user prompt: ${courseData}
 
 Your task is to generate a complete course syllabus consisting of exactly 6 modules. Each module must contain between 3 and 5 chapters.
 
@@ -18,5 +14,7 @@ For each module, provide a descriptive title. For each chapter within a module, 
 
 The final output must be a single, valid JSON object. Do not include any explanatory text, markdown formatting, or any content outside of the JSON structure. The JSON object should follow this schema:
 
- {"course_title": "A Comprehensive Course on", "modules " :  }, //...5 more module objects ]}`
-}
+{"course_title": "A Comprehensive Course on", "modules": []}`;
+};
+
+export default syllabusGeneratePrompt;
