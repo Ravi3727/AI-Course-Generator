@@ -5,31 +5,67 @@
 // Return the generated quiz content
 
 
+const quizPrompt = (syllabus) => {
+    // Stringify the syllabus object to embed it in the prompt.
+    const syllabusString = JSON.stringify(syllabus, null, 2);
 
-const quizPrompt = (courseData) => {
-    `
-You are an expert assessment creator and subject matter expert in "". Your task is to create a multiple-choice quiz to test a student's comprehension of a provided text.
+    return `
+You are an expert assessment creator and a subject matter expert in Computer Science, specializing in Data Structures & Algorithms.
 
 ## Context
-The quiz must be based *solely* on the content of the following explanatory text. All questions, correct answers, and explanations must be derived directly from this material. Do not use any external knowledge.
+You are provided with a course syllabus in JSON format. Your primary task is to create a comprehensive set of quizzes based on this syllabus.
 
-Explanatory Text:
+Syllabus:
 """
-${courseData.chapterText}
+${syllabusString}
 """
 
 ## Task
-Generate a quiz consisting of exactly 5 multiple-choice questions based on the provided text.
+You must generate a **separate and unique** multiple-choice quiz for **every single chapter** listed within **each module** of the provided syllabus.
 
-## Quiz Requirements
-1.  **Question Clarity:** Each question must be clear, concise, and unambiguous.
-2.  **Plausible Distractors:** For each question, provide three incorrect "distractor" options. These distractors must be plausible and related to the topic but demonstrably false according to the provided text.
-3.  **Single Correct Answer:** Each question must have only one correct answer.
-4.  **Explanations:** For each question, provide a brief explanation for why the correct answer is correct, citing the reasoning from the provided text. This turns the quiz into a learning tool.
+Use your expert knowledge of Data Structures and Algorithms to create relevant questions, answers, and explanations for each chapter's topic.
+
+Each individual chapter quiz should consist of **exactly 3 questions**.
+
+## Quiz Requirements (for each quiz)
+1.  **Topical Relevance:** All questions must be strictly related to the topic of their corresponding chapter.
+2.  **Clarity:** Each question must be clear and unambiguous.
+3.  **Plausible Distractors:** Provide three incorrect but plausible "distractor" options for each question.
+4.  **Single Correct Answer:** Each question must have only one correct answer.
+5.  **Explanations:** For each question, provide a brief but clear explanation of why the correct answer is correct.
 
 ## Output Format
-The entire output must be a single, valid JSON object. Do not include any introductory text, markdown, or any content outside of the JSON structure. Adhere strictly to the following schema, including all specified keys:
+The entire output must be a single, valid JSON object. Do not include any introductory text, markdown, or any content outside of the JSON structure. The output must adhere strictly to the following nested schema:
 
-{ "quiz": }
-    `
+{
+  "course_quizzes": [
+    {
+      "module_title": "Title of the Module",
+      "chapter_quizzes": [
+        {
+          "chapter_title": "Title of the Chapter",
+          "quiz": [
+            {
+              "question": "The text of the first question for this chapter.",
+              "options": [
+                "Option A",
+                "Option B",
+                "Option C",
+                "Option D"
+              ],
+              "correct_answer": "The correct option's text",
+              "explanation": "A brief explanation of why the answer is correct."
+            },
+            // ...2 more questions for this chapter
+          ]
+        },
+        // ...more chapter_quizzes for this module
+      ]
+    },
+    // ...more modules
+  ]
 }
+    `;
+};
+
+export default quizPrompt;
